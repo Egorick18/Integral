@@ -55,6 +55,17 @@ namespace Integr
             try
             {
                 var n = double.Parse(N.Text);
+
+                if (n <= 0)
+                {
+                    MessageBox.Show(
+                        "Число разбиений должно быть натуральным",
+                        "Ошибка записи",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
+                };
+
             }
             catch
             {
@@ -71,6 +82,31 @@ namespace Integr
                 var a = double.Parse(A.Text);
                 var b = double.Parse(B.Text);
                 var n = int.Parse(N.Text);
+                
+                if (a > b)
+                {
+                    var result = MessageBox.Show(
+                        "Нижняя граница ({a}) больше верхней ({b}). Поменять их местами?",
+                        "Некорректный интервал",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Question
+                    );
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        (a, b) = (b, a);
+
+                        A.Text = a.ToString();
+                        B.Text = b.ToString();
+
+                        MessageBox.Show(
+                            "Границы успешно изменены: a = {a}, b = {b}",
+                            "Информация",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Information
+                        );
+                    }
+                }
 
                 Integrator i = new Integrator(a, b, n);
                 var res = i.IntegrateByMidpointRule();

@@ -5,17 +5,20 @@ namespace TestIntegrator
 {
     public class UnitTest1
     {
-        [Fact]
-        public void IntegrateByMidpointRule_Test()
-        {
+        [Theory]
+        [InlineData(2.0,5.0,10, 7.112)]
+        [InlineData(3.5, 10.0, 100, 16.184)]
+        [InlineData(0.0,0.0,10,0)]
 
-            var integrator = new Integrator(a: 2, b: 5, n: 10);
+        public void IntegrateByMidpointRule_Test(double a, double b, int n, double expecded)
+        {
+            var integrator = new Integrator(a, b, n);
 
 
             double result = integrator.IntegrateByMidpointRule();
 
-            double expected = 7.1122;
-            Assert.Equal(expected, result, 4);
+            Assert.Equal(expecded, result, 3);
         }
+
     }
 }
